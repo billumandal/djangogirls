@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# print "Base dir path", BASE_DIR
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'social_django',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -49,6 +51,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'djangogirls.urls'
@@ -56,7 +59,10 @@ ROOT_URLCONF = 'djangogirls.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'registration'), ],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'registration'), 
+            os.path.join(BASE_DIR, 'templates'), 
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,4 +130,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 ALLOWED_HOSTS = ['127.O.O.1','.pythonanywhere.com', '.heroku.com']
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = '/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    )
+
+SOCIAL_AUTH_GITHUB_KEY = '147ec5bb57fe1cfb96de'
+SOCIAL_AUTH_GITHUB_SECRET = 'b897ed675392782bcc56b38cf5c84490aa10d539'
+
+SOCIAL_AUTH_TWITTER_KEY = '2MFPh00norscnHYg0WsKFYMwA'
+SOCIAL_AUTH_TWITTER_SECRET = 'zJC8RXtYxdSJrfiQAaoiqjrLqwNeurWgwsQ2ZQf7TLogkBNArz'
+
+# SOCIAL_AUTH_FACEBOOK_KEY = '1838964016363614'
+# SOCIAL_AUTH_FACEBOOK_SECRET = '0bd1a22b66dbec3b61803da44cc6a0e5'
